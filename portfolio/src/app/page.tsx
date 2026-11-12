@@ -1,12 +1,14 @@
-import { SITE } from "@/data/site";
+import { EDUCATION, SITE } from "@/data/site";
 import { BackgroundScene } from "@/components/three/BackgroundScene";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { SectionTracker } from "@/components/ui/SectionTracker";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Preloader } from "@/components/ui/Preloader";
 import { Scrim } from "@/components/ui/Scrim";
+import { ThemeSync } from "@/components/ui/ThemeToggle";
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { Snapshot } from "@/components/sections/Snapshot";
 import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Projects } from "@/components/sections/Projects";
@@ -19,7 +21,8 @@ const jsonLd = {
   "@type": "Person",
   name: SITE.fullName,
   jobTitle: SITE.role,
-  worksFor: { "@type": "Organization", name: "Nuel Technologies" },
+  worksFor: { "@type": "Organization", name: SITE.company },
+  alumniOf: { "@type": "CollegeOrUniversity", name: EDUCATION.school },
   address: { "@type": "PostalAddress", addressLocality: "Lagos", addressCountry: "NG" },
   email: SITE.email,
   url: SITE.url,
@@ -34,6 +37,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Preloader />
+      <ThemeSync />
       <ScrollProgress />
       <SmoothScroll />
       <SectionTracker />
@@ -42,6 +46,7 @@ export default function Page() {
       <Navbar />
       <main id="main" className="relative z-10">
         <Hero />
+        <Snapshot />
         <About />
         <Experience />
         <Projects />

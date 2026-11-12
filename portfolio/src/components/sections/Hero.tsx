@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
-import { SITE } from "@/data/site";
+import { HERO, SITE } from "@/data/site";
 import { scrollToId } from "@/lib/store";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { Reveal } from "@/components/ui/Reveal";
@@ -36,13 +36,20 @@ export function Hero() {
     >
       <div className="mx-auto w-full max-w-7xl flex-1">
         <Reveal immediate delay={T0} y={12}>
-          <p className="mb-8 inline-flex items-center gap-3 rounded-full border border-line bg-surface/60 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted backdrop-blur">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-            </span>
-            {SITE.location} · <LagosClock /> WAT
-          </p>
+          <div className="mb-8 flex flex-wrap items-center gap-3">
+            {SITE.openToWork && (
+              <p className="inline-flex items-center gap-3 rounded-full border border-line-strong bg-surface/60 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-fg backdrop-blur">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+                </span>
+                {SITE.statusText}
+              </p>
+            )}
+            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted backdrop-blur">
+              {SITE.location} · <LagosClock /> WAT
+            </p>
+          </div>
         </Reveal>
 
         <h1 className="text-[clamp(3.4rem,13vw,12rem)] font-semibold leading-[0.9] tracking-[-0.05em]">
@@ -52,10 +59,13 @@ export function Hero() {
 
         <div className="mt-10 grid max-w-3xl gap-8 md:mt-14">
           <Reveal immediate delay={T0 + 0.5}>
-            <p className="text-xl leading-snug text-fg md:text-2xl">
-              <span className="text-muted">{SITE.role} building </span>
-              scalable APIs, mobile apps and the interfaces on top of them.
-            </p>
+            <div className="space-y-4">
+              <p className="text-xl leading-snug md:text-2xl">
+                <span className="font-medium text-accent">{SITE.role}</span>{" "}
+                <span className="text-fg">{HERO.line}</span>
+              </p>
+              <p className="max-w-2xl text-base leading-relaxed text-muted md:text-lg">{HERO.sub}</p>
+            </div>
           </Reveal>
 
           <Reveal immediate delay={T0 + 0.65} className="flex flex-wrap items-center gap-3">

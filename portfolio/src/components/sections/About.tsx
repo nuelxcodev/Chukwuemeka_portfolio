@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, useInView } from "motion/react";
-import { ABOUT } from "@/data/site";
+import { ABOUT, EDUCATION } from "@/data/site";
+import { EASE } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { TiltCard } from "@/components/ui/TiltCard";
-import { Chip } from "@/components/ui/Chip";
+import { RoleFit } from "./RoleFit";
 
 function Counter({ to, suffix }: { to: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -16,7 +16,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
     if (!inView) return;
     const controls = animate(0, to, {
       duration: 1.6,
-      ease: [0.16, 1, 0.3, 1],
+      ease: EASE,
       onUpdate: (v) => setN(Math.round(v)),
     });
     return () => controls.stop();
@@ -31,10 +31,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="relative px-6 py-28 md:px-12 md:py-40 lg:px-20"
-    >
+    <section id="about" className="relative px-6 py-28 md:px-12 md:py-40 lg:px-20">
       <div className="mx-auto max-w-7xl">
         <SectionHeading index="01" label="About" title={ABOUT.heading} />
 
@@ -45,50 +42,37 @@ export function About() {
                 <p>{p}</p>
               </Reveal>
             ))}
-            <Reveal delay={0.2}>
-              <p className="border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.18em]">
-                <span className="text-accent">Education</span>
-                <span className="mx-3 text-line-strong">/</span>
-                <span className="text-fg">
-                  {ABOUT.education.program}, {ABOUT.education.school}
-                </span>
-                <span className="ml-3">{ABOUT.education.period}</span>
-              </p>
-            </Reveal>
           </div>
 
-          <dl className="grid grid-cols-3 gap-4 self-start">
-            {ABOUT.stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.08}>
-                <div className="glass flex h-full flex-col rounded-2xl border border-line p-5">
-                  <dt className="order-2 mt-3 text-xs leading-snug text-muted">{s.label}</dt>
-                  <dd className="text-4xl font-semibold tracking-tight text-fg md:text-5xl">
-                    <Counter to={s.value} suffix={s.suffix} />
-                  </dd>
-                </div>
-              </Reveal>
-            ))}
-          </dl>
+          <div className="space-y-4 self-start">
+            <dl className="grid grid-cols-3 gap-4">
+              {ABOUT.stats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 0.08}>
+                  <div className="glass flex h-full flex-col rounded-2xl border border-line p-5">
+                    <dt className="order-2 mt-3 text-xs leading-snug text-muted">{s.label}</dt>
+                    <dd className="text-4xl font-semibold tracking-tight text-fg md:text-5xl">
+                      <Counter to={s.value} suffix={s.suffix} />
+                    </dd>
+                  </div>
+                </Reveal>
+              ))}
+            </dl>
+
+            <Reveal delay={0.2}>
+              <div className="glass rounded-2xl border border-line p-5">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
+                  Education
+                </p>
+                <p className="mt-3 text-lg font-medium leading-snug">{EDUCATION.school}</p>
+                <p className="mt-1 text-muted">
+                  {EDUCATION.program} · {EDUCATION.status}
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
-        <ul className="mt-20 grid gap-4 md:mt-28 md:grid-cols-2 lg:grid-cols-4">
-          {ABOUT.capabilities.map((c, i) => (
-            <li key={c.title}>
-              <Reveal delay={i * 0.08} className="h-full">
-                <TiltCard className="glass h-full rounded-3xl border border-line p-6 transition-colors duration-500 hover:border-line-strong">
-                  <p className="mb-8 font-mono text-xs text-accent">0{i + 1}</p>
-                  <h3 className="mb-3 text-xl font-semibold tracking-tight">{c.title}</h3>
-                  <p className="mb-6 text-sm leading-relaxed text-muted">{c.body}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {c.tags.map((t) => (
-                      <Chip key={t}>{t}</Chip>
-                    ))}
-                  </div>
-                </TiltCard>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        <RoleFit />
       </div>
     </section>
   );

@@ -36,6 +36,7 @@ export function Rig() {
   const targetA = useMemo(() => new THREE.Color(), []);
   const targetB = useMemo(() => new THREE.Color(), []);
   const energy = useRef(0);
+  const lastLight = useRef<boolean | null>(null);
 
   const lightA = useRef<THREE.PointLight>(null);
   const lightB = useRef<THREE.PointLight>(null);
@@ -166,10 +167,26 @@ export function Rig() {
     const targetEnergy = reduced ? 0 : Math.min(Math.abs(store.velocity) / 40, 1);
     energy.current = MathUtils.damp(energy.current, targetEnergy, 4, dt);
 
+    /* theme: light mode needs darker ink, solid (not additive) particles, paler chassis */
+    const light = store.theme === "light";
+    if (lastLight.current !== light) {
+      lastLight.current = light;
+      shared.body.color.set(light ? "#d7dce8" : "#0c1019");
+      shared.dim.color.set(light ? "#a9b1c4" : "#252b3a");
+      particleMat.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
+      particleMat.needsUpdate = true;
+    }
+
     /* colours */
     const ck = 1 - Math.exp(-lambda * dt);
-    colorA.lerp(targetA.set(k.a), ck);
-    colorB.lerp(targetB.set(k.b), ck);
+    targetA.set(k.a);
+    targetB.set(k.b);
+    if (light) {
+      targetA.multiplyScalar(0.5);
+      targetB.multiplyScalar(0.5);
+    }
+    colorA.lerp(targetA, ck);
+    colorB.lerp(targetB, ck);
     // materials copy colours on construction, so push the live palette each frame
     shared.edge.color.copy(colorA);
     shared.glow.color.copy(colorA);
@@ -193,7 +210,7 @@ export function Rig() {
 
   return (
     <>
-      <ambientLight intensity={0.55} />
+      <ambientLight intensity={0.7} />
       <directionalLight position={[3, 5, 4]} intensity={1.6} />
       <pointLight ref={lightA} position={[-3, 2, 3]} intensity={38} decay={2} />
       <pointLight ref={lightB} position={[3, -2, 2]} intensity={24} decay={2} />

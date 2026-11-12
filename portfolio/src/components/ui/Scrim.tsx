@@ -17,13 +17,13 @@ export function Scrim() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[5]">
       {/* hero: directional (left-to-right on desktop, top-to-bottom on mobile) */}
       <motion.div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgb(5_6_10/0.1)_0%,rgb(5_6_10/0.55)_45%,rgb(5_6_10/0.88)_100%)] md:bg-[linear-gradient(90deg,rgb(5_6_10/0.9)_0%,rgb(5_6_10/0.62)_36%,rgb(5_6_10/0.1)_68%,transparent_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgb(var(--bg-rgb)/0.1)_0%,rgb(var(--bg-rgb)/0.55)_45%,rgb(var(--bg-rgb)/0.88)_100%)] md:bg-[linear-gradient(90deg,rgb(var(--bg-rgb)/0.9)_0%,rgb(var(--bg-rgb)/0.62)_36%,rgb(var(--bg-rgb)/0.1)_68%,transparent_100%)]"
         animate={{ opacity: hero ? 1 : 0 }}
         transition={fade}
       />
       {/* every other section: even dimming, a touch stronger at the edges */}
       <motion.div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(5_6_10/0.7),rgb(5_6_10/0.86))]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgb(var(--bg-rgb)/0.7),rgb(var(--bg-rgb)/0.86))]"
         animate={{ opacity: hero ? 0 : 1 }}
         transition={fade}
       />

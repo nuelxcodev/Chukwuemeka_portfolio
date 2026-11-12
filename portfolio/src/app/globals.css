@@ -3,18 +3,45 @@
 /* ------------------------------------------------------------------ */
 /* Design tokens: one source for colour, type and motion              */
 /* ------------------------------------------------------------------ */
-:root {
-  --bg: #05060a;
+:root,
+:root[data-theme="dark"] {
+  --bg-rgb: 5 6 10;
+  --bg: rgb(var(--bg-rgb));
   --surface: #0b0d13;
   --surface-2: #11141c;
   --line: rgb(255 255 255 / 0.08);
   --line-strong: rgb(255 255 255 / 0.16);
   --fg: #f3f2ee;
   --muted: #9a9eab; /* 7:1 on --bg */
-  --accent: #c8ff4d;
+  --accent-rgb: 200 255 77;
+  --accent: rgb(var(--accent-rgb));
   --accent-ink: #0b1100;
   --ion: #5b7cff;
+  --glass: rgb(11 13 19 / 0.62);
+  --shadow-rgb: 0 0 0;
+  --glow-a: rgb(91 124 255 / 0.12);
+  --glow-b: rgb(200 255 77 / 0.06);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+/* Light theme: the lime becomes a deep green so text stays above 4.5:1 */
+:root[data-theme="light"] {
+  --bg-rgb: 246 246 242;
+  --surface: #ffffff;
+  --surface-2: #ecece6;
+  --line: rgb(10 12 20 / 0.1);
+  --line-strong: rgb(10 12 20 / 0.22);
+  --fg: #0b0d12;
+  --muted: #545968; /* 6.6:1 on --bg */
+  --accent-rgb: 63 111 0;
+  --accent-ink: #ffffff;
+  --ion: #3b56d9;
+  --glass: rgb(255 255 255 / 0.72);
+  --shadow-rgb: 20 24 40;
+  --glow-a: rgb(59 86 217 / 0.1);
+  --glow-b: rgb(63 111 0 / 0.07);
+  color-scheme: light;
 }
 
 @theme inline {
@@ -37,7 +64,6 @@
 @layer base {
   html {
     background: var(--bg);
-    color-scheme: dark;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -73,13 +99,25 @@ html.lenis body {
   overflow: hidden;
 }
 
+/* Brief cross-fade when the theme flips (class is added/removed by lib/theme.ts) */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease,
+    fill 0.45s ease !important;
+}
+
 /* ------------------------------------------------------------------ */
 /* Atmosphere                                                         */
 /* ------------------------------------------------------------------ */
 .backdrop {
   background:
-    radial-gradient(60rem 40rem at 78% 8%, rgb(91 124 255 / 0.12), transparent 60%),
-    radial-gradient(50rem 36rem at 8% 70%, rgb(200 255 77 / 0.06), transparent 60%),
+    radial-gradient(60rem 40rem at 78% 8%, var(--glow-a), transparent 60%),
+    radial-gradient(50rem 36rem at 8% 70%, var(--glow-b), transparent 60%),
     var(--bg);
 }
 
@@ -95,7 +133,7 @@ html.lenis body {
 }
 
 .glass {
-  background: rgb(11 13 19 / 0.62);
+  background: var(--glass);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 }

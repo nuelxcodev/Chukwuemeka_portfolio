@@ -33,9 +33,9 @@ function ScreenShot({ shot }: { shot: Shot }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-surface-2">
       <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
         {shot.host && (
           <span className="mx-auto max-w-[70%] truncate rounded-full bg-bg/70 px-4 py-1 font-mono text-[10px] text-muted">
             {shot.host}

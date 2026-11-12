@@ -1,6 +1,6 @@
 # Design principles
 
-**Direction.** Dark, editorial, instrument-like. One acid-lime accent on near-black, with a cool
+**Direction.** Editorial, instrument-like, in light and dark themes (dark is the hero). One acid-lime accent on near-black, with a cool
 ion-blue as the second note. A serif italic is used sparingly for emphasis against a tight grotesk.
 
 1. **Hierarchy through scale, not decoration.** Display type is fluid (`clamp`), body is 16–20px,
@@ -21,3 +21,6 @@ ion-blue as the second note. A serif italic is used sparingly for emphasis again
 8. **Performance budget.** Three.js loads after first paint, DPR capped at 1.75, shared geometry
    and materials across the 3D objects, screenshots served as optimised WebP through `next/image`,
    no external icon requests.
+
+9. **Themes are tokens.** Light and dark differ only in the CSS variables in `globals.css`; the lime accent
+   becomes a deep green in light mode so text stays above 4.5:1. The 3D scene reads the theme and adapts.

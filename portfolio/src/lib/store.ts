@@ -22,6 +22,7 @@ export const store = {
   pointerY: 0,
   section: 0,
   reduced: false,
+  theme: "dark" as "dark" | "light",
 };
 
 export const lenisRef: { current: Lenis | null } = { current: null };

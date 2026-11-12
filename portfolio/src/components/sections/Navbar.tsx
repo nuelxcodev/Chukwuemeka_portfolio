@@ -7,6 +7,7 @@ import { NAV, SITE } from "@/data/site";
 import { SECTIONS, scrollToId } from "@/lib/store";
 import { cn, EASE } from "@/lib/utils";
 import { useActiveSection } from "@/components/ui/useActiveSection";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
   const active = useActiveSection();
@@ -36,7 +37,7 @@ export function Navbar() {
       >
         <nav
           aria-label="Primary"
-          className="glass flex items-center gap-1 rounded-full border border-line py-1.5 pl-2 pr-1.5 shadow-[0_8px_40px_-12px_rgb(0_0_0/0.8)]"
+          className="glass flex items-center gap-1 rounded-full border border-line py-1.5 pl-2 pr-1.5 shadow-[0_8px_40px_-12px_rgb(var(--shadow-rgb)/0.45)]"
         >
           <button
             onClick={() => go("home")}
@@ -62,7 +63,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="nav-pill"
-                        className="absolute inset-0 -z-10 rounded-full bg-white/10"
+                        className="absolute inset-0 -z-10 rounded-full bg-fg/10"
                         transition={{ type: "spring", stiffness: 380, damping: 32 }}
                       />
                     )}
@@ -72,6 +73,8 @@ export function Navbar() {
               );
             })}
           </ul>
+
+          <ThemeToggle className="ml-1" />
 
           <a
             href={SITE.cv}
@@ -86,7 +89,7 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="ml-8 grid h-9 w-9 place-items-center rounded-full text-fg md:hidden"
+            className="ml-1 grid h-9 w-9 place-items-center rounded-full text-fg md:hidden"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
@@ -121,13 +124,16 @@ export function Navbar() {
                 </motion.li>
               ))}
             </ul>
-            <a
-              href={SITE.cv}
-              download
-              className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-accent-ink"
-            >
-              <Download size={16} aria-hidden /> Download CV
-            </a>
+            <div className="mt-10 flex items-center gap-3">
+              <a
+                href={SITE.cv}
+                download
+                className="inline-flex w-fit items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-accent-ink"
+              >
+                <Download size={16} aria-hidden /> Download CV
+              </a>
+              <ThemeToggle className="border border-line-strong" />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

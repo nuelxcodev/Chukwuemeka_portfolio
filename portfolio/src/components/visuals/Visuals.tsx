@@ -13,9 +13,9 @@ export function ChartVisual() {
       className="relative h-full min-h-[260px] w-full overflow-hidden rounded-2xl border border-line bg-surface-2"
     >
       <div className="flex items-center gap-2 border-b border-line px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-fg/15" />
         <span className="ml-3 font-mono text-[11px] text-muted">Dashboard</span>
       </div>
       <div className="grid grid-cols-3 gap-3 p-5 pb-0">

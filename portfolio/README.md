@@ -18,6 +18,7 @@ Everything lives in **`src/data/site.ts`**. Lines marked `⚠ EDIT` need your in
 MatchMind AI and Nux Express, and the GitHub URL.
 
 Your CV is served from `public/Chukwuemeka_Ekine_CV.pdf`; replace the file to update the download.
+`SITE.openToWork` / `SITE.statusText` control the availability chip in the hero and snapshot.
 
 ## Structure
 
@@ -32,6 +33,17 @@ src/
     ui/                Reveal, SplitText, Magnetic, TiltCard, Preloader, SmoothScroll, ...
     visuals/           generative art for projects without a screenshot
 ```
+
+## Features aimed at recruiters
+
+- **Availability chip** and **20-second snapshot** card (role, experience, stack, location, education)
+  with one-click Download CV, Save contact (.vcf) and Email.
+- **Role-fit cards**: each role a recruiter might hire for, mapped to where it was actually done.
+- **Experience timeline** showing the three most recent roles, with a "Show more previous positions" fold.
+- **Recruiter FAQ** accordion and an **enquiry form** that drafts an email (no backend, nothing stored).
+- **Light / dark theme** toggle: follows the OS by default, remembers the choice, no flash on load, and the
+  3D scene re-tints itself for each theme.
+- Person structured data (JSON-LD) for search engines.
 
 ## How the 3D works
 

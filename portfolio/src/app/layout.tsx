@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { SITE } from "@/data/site";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
 const sans = Inter_Tight({
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: `${SITE.name} · Software Engineer`,
   description:
-    "Software engineer based in Lagos. Lead backend engineer building scalable APIs, mobile apps and modern web interfaces with Node.js, React, Next.js and Flutter.",
+    "Software engineer based in Lagos. Backend engineer building scalable APIs, mobile apps and modern web interfaces with Node.js, React, Next.js and Flutter.",
   openGraph: {
     title: `${SITE.name} · Software Engineer`,
     description: SITE.tagline,
@@ -36,8 +37,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060a",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f6f2" },
+    { media: "(prefers-color-scheme: dark)", color: "#05060a" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -47,7 +51,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${sans.variable} ${display.variable} ${mono.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* sets data-theme before first paint: no flash of the wrong theme */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="backdrop grain antialiased">
         <a href="#main" className="skip-link">
           Skip to content
