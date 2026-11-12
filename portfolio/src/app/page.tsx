@@ -4,6 +4,7 @@ import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { SectionTracker } from "@/components/ui/SectionTracker";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { Preloader } from "@/components/ui/Preloader";
+import { Scrim } from "@/components/ui/Scrim";
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
@@ -37,6 +38,7 @@ export default function Page() {
       <SmoothScroll />
       <SectionTracker />
       <BackgroundScene />
+      <Scrim />
       <Navbar />
       <main id="main" className="relative z-10">
         <Hero />

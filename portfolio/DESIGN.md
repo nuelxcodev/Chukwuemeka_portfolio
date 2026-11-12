@@ -13,10 +13,11 @@ ion-blue as the second note. A serif italic is used sparingly for emphasis again
 5. **Motion has a job.** A single expo-out curve (`cubic-bezier(.16,1,.3,1)`) everywhere. Entrances
    reveal hierarchy (name, then role, then actions); hover states confirm affordance; the 3D object
    tells you where you are in the page. Only `transform`/`opacity` are animated.
-6. **Depth is layered.** WebGL background → glass surfaces → content. Cards tilt in 3D toward the
+6. **Depth is layered.** WebGL background → readability scrim → glass surfaces → content. Cards tilt in 3D toward the
    pointer, lit by a cursor-following spotlight.
 7. **Respect the user.** Reduced-motion is honoured end to end, touch devices skip pointer
    effects, semantic landmarks + skip link + `aria-current` nav, decorative visuals are
    `aria-hidden`, and the page is fully usable if WebGL or JS motion fails.
-8. **Performance budget.** Three.js loads after first paint, DPR capped at 1.75, one draw call
-   each for the core and the particles, no images or external icon requests.
+8. **Performance budget.** Three.js loads after first paint, DPR capped at 1.75, shared geometry
+   and materials across the 3D objects, screenshots served as optimised WebP through `next/image`,
+   no external icon requests.

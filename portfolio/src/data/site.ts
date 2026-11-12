@@ -1,7 +1,7 @@
 /**
  * Single source of truth for every piece of copy on the site.
- * Content comes from the CV. Items marked ⚠ EDIT are my best draft and
- * should be replaced with your own wording / links.
+ * Content comes from the CV and project screenshots. Items marked ⚠ EDIT
+ * are assumptions to confirm (roles and tech stacks I could not see).
  */
 
 export const SITE = {
@@ -148,6 +148,27 @@ export const EXPERIENCE: Job[] = [
   },
 ];
 
+export type ProjectImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  /** browser = framed website screenshot, phone = tall mobile screenshot */
+  kind: "browser" | "phone";
+  /** domain shown in the browser frame */
+  domain?: string;
+};
+
+export type Shot = {
+  src: string;
+  alt: string;
+  kind: "browser" | "phone";
+  width: number;
+  height: number;
+  /** shown in the fake browser address bar */
+  host?: string;
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -159,46 +180,64 @@ export type Project = {
   highlights: string[];
   stack: string[];
   href?: string;
-  visual: "graph" | "terminal" | "phone" | "chart";
-  layout: "wide" | "wide-reverse" | "half";
+  shot?: Shot;
+  /** generative art, used when there is no screenshot */
+  visual?: "chart";
+  layout: "wide" | "wide-reverse";
 };
 
 export const PROJECTS: Project[] = [
   {
-    // ⚠ EDIT: I only had the name, so this copy is a neutral draft. Replace with the real story.
     id: "matchmind",
     title: "MatchMind AI",
-    kicker: "AI product",
-    role: "Founder & engineer",
-    badge: "New",
+    kicker: "AI football analysis · Web",
+    role: "Software Engineer",
+    badge: "Live",
     summary:
-      "An AI-driven product that finds meaningful matches and surfaces insight from data, designed and engineered end to end.",
+      "Pick a game and MatchMind reads both teams' recent form to show the likeliest outcomes, with the reasons behind them, before kick-off.",
     highlights: [
-      "Product design, architecture and implementation owned in one place.",
-      "Intelligent matching engine behind a fast, modern interface.",
-      "Built with the same standards I apply to production backends.",
+      "Goal model, recent form and head-to-head analysis for every fixture.",
+      "Win-probability breakdowns on upcoming matches.",
+      "Accuracy tracking, group view and an admin console.",
     ],
-    stack: ["Next.js", "TypeScript", "Node.js", "AI / ML"],
-    visual: "graph",
+    // ⚠ EDIT: add your real stack
+    stack: ["AI model", "Web app", "Vercel"],
+    href: "https://matchmind-lime.vercel.app",
+    shot: {
+      src: "/projects/matchmind.webp",
+      alt: "MatchMind AI home screen: 'Know the match before kick-off' with upcoming fixtures and win probabilities",
+      kind: "browser",
+      width: 1600,
+      height: 862,
+      host: "matchmind-lime.vercel.app",
+    },
     layout: "wide",
   },
   {
-    // ⚠ EDIT: draft copy inferred from your backend standards at Nuel Technologies.
     id: "nux-express",
-    title: "nux-express",
-    kicker: "Backend foundation",
-    role: "Creator",
-    badge: "New",
+    title: "Nux Express",
+    kicker: "Logistics · Web",
+    role: "Software Engineer",
+    badge: "Live",
     summary:
-      "An opinionated Express.js foundation: structured routing, authentication, role-based access and database tooling, ready for a new product on day one.",
+      "A courier and shipment-tracking platform: enter a tracking number to see the current location and status of a parcel, anywhere in the world.",
     highlights: [
-      "Layered, testable project structure.",
-      "Auth and RBAC wired in from the start.",
+      "Tracking-number lookup with live location and status.",
+      "Fast delivery, secure handling and international shipping services.",
+      "Multi-language support and a customer-care channel.",
     ],
-    stack: ["Express.js", "Node.js", "MySQL", "Redis"],
-    href: "https://github.com/nuelxcode", // ⚠ EDIT: link to the repo
-    visual: "terminal",
-    layout: "half",
+    // ⚠ EDIT: add your real stack
+    stack: ["Web app", "Shipment tracking", "Vercel"],
+    href: "https://site-jet-five-94.vercel.app",
+    shot: {
+      src: "/projects/nux-express.webp",
+      alt: "Nux Express home screen: 'Track your shipment with ease' with a tracking-number field over a dotted world map",
+      kind: "browser",
+      width: 1600,
+      height: 862,
+      host: "site-jet-five-94.vercel.app",
+    },
+    layout: "wide-reverse",
   },
   {
     id: "gighive",
@@ -206,15 +245,21 @@ export const PROJECTS: Project[] = [
     kicker: "Service marketplace · Mobile",
     role: "Lead Software Engineer",
     summary:
-      "A mobile marketplace that connects skilled professionals with clients who need on-demand services nearby: discover, request, book and chat.",
+      "A mobile marketplace that connects skilled professionals with clients who need on-demand services nearby: discover, request, book and get paid.",
     highlights: [
+      "Provider dashboard with earnings, withdrawals and job history.",
       "Location-based discovery of nearby providers.",
       "Booking workflows, secure auth and session management.",
-      "Express, MySQL and Redis behind a Flutter app.",
     ],
     stack: ["Flutter", "Dart", "Express.js", "MySQL", "Redis"],
-    visual: "phone",
-    layout: "half",
+    shot: {
+      src: "/projects/gighive.webp",
+      alt: "GigHive provider home screen showing balance, quick actions, services and recent jobs",
+      kind: "phone",
+      width: 640,
+      height: 1297,
+    },
+    layout: "wide",
   },
   {
     id: "data-desktop",
@@ -226,7 +271,7 @@ export const PROJECTS: Project[] = [
     highlights: [
       "Member records, income and expense tracking.",
       "Interactive Chart.js analytics and visual reports.",
-      "Express APIs and MongoDB with Tailwind-styled UI.",
+      "Express APIs and MongoDB with a Tailwind-styled UI.",
     ],
     stack: ["Electron.js", "React", "Tailwind CSS", "Express.js", "MongoDB", "Chart.js"],
     visual: "chart",

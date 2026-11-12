@@ -1,48 +1,77 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { EARLIER_WORK, PROJECTS, type Project } from "@/data/site";
+import { EARLIER_WORK, PROJECTS, type Project, type Shot } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { Chip } from "@/components/ui/Chip";
-import {
-  ChartVisual,
-  GraphVisual,
-  PhoneVisual,
-  TerminalVisual,
-} from "@/components/visuals/Visuals";
+import { ChartVisual } from "@/components/visuals/Visuals";
 
-const VISUALS = {
-  graph: GraphVisual,
-  terminal: TerminalVisual,
-  phone: PhoneVisual,
-  chart: ChartVisual,
-} as const;
+/** Real screenshot inside a browser frame (web) or on a glowing stage (phone). */
+function ScreenShot({ shot }: { shot: Shot }) {
+  if (shot.kind === "phone") {
+    return (
+      <div className="relative grid h-full min-h-[22rem] place-items-center overflow-hidden rounded-2xl border border-line bg-surface-2 py-8">
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_60%,rgb(91_124_255/0.28),transparent_62%)]"
+        />
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          sizes="(min-width: 768px) 260px, 70vw"
+          className="relative h-auto w-[min(70%,15.5rem)] drop-shadow-[0_30px_50px_rgb(0_0_0/0.55)] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-[1.04]"
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="overflow-hidden rounded-2xl border border-line bg-surface-2">
+      <div className="flex items-center gap-2 border-b border-line px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+        {shot.host && (
+          <span className="mx-auto max-w-[70%] truncate rounded-full bg-bg/70 px-4 py-1 font-mono text-[10px] text-muted">
+            {shot.host}
+          </span>
+        )}
+        <span className="w-[42px]" aria-hidden />
+      </div>
+      <div className="overflow-hidden">
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          sizes="(min-width: 1280px) 560px, (min-width: 768px) 45vw, 90vw"
+          className="h-auto w-full transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-[1.035]"
+        />
+      </div>
+    </div>
+  );
+}
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const Visual = VISUALS[project.visual];
-  const wide = project.layout !== "half";
   const reverse = project.layout === "wide-reverse";
 
   return (
-    <Reveal className={cn(wide ? "md:col-span-2" : "md:col-span-1")}>
+    <Reveal className="md:col-span-2">
       <TiltCard className="glass h-full rounded-[2rem] border border-line p-5 transition-colors duration-500 hover:border-line-strong md:p-6">
-        <article
-          className={cn(
-            "grid h-full gap-6",
-            wide ? "md:grid-cols-2 md:gap-10" : "grid-rows-[auto_1fr]",
-          )}
-        >
-          <div className={cn(wide && (reverse ? "md:order-1" : "md:order-2"), !wide && "h-64")}>
-            <Visual />
+        <article className="grid h-full items-center gap-6 md:grid-cols-2 md:gap-10">
+          <div className={cn(reverse ? "md:order-1" : "md:order-2")}>
+            {project.shot ? <ScreenShot shot={project.shot} /> : <ChartVisual />}
           </div>
 
           <div
             className={cn(
-              "flex flex-col justify-between gap-8 p-1 md:p-3",
-              wide && (reverse ? "md:order-2" : "md:order-1"),
+              "flex h-full flex-col justify-between gap-8 p-1 md:p-3",
+              reverse ? "md:order-2" : "md:order-1",
             )}
           >
             <div>
@@ -56,12 +85,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 )}
               </div>
 
-              <h3
-                className={cn(
-                  "font-semibold leading-[1.02] tracking-[-0.03em]",
-                  wide ? "text-4xl md:text-6xl" : "text-3xl md:text-4xl",
-                )}
-              >
+              <h3 className="text-4xl font-semibold leading-[1.02] tracking-[-0.03em] md:text-6xl">
                 {project.title}
               </h3>
               <p className="mt-5 max-w-xl leading-relaxed text-muted">{project.summary}</p>
@@ -94,8 +118,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 font-medium text-fg transition-colors hover:text-accent"
                   >
-                    View <ArrowUpRight size={16} aria-hidden />
-                    <span className="sr-only"> {project.title}</span>
+                    Visit live site <ArrowUpRight size={16} aria-hidden />
+                    <span className="sr-only"> {project.title} (opens in a new tab)</span>
                   </a>
                 )}
               </div>
@@ -115,7 +139,7 @@ export function Projects() {
           index="03"
           label="Selected work"
           title="Things I've *shipped* and am shipping."
-          lede="Backend foundations, mobile marketplaces, desktop tools and AI products."
+          lede="AI products, logistics platforms, mobile marketplaces and desktop tools."
         />
 
         <div className="grid gap-5 md:grid-cols-2 md:gap-6" style={{ perspective: "1400px" }}>
