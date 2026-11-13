@@ -376,7 +376,7 @@ export const EARLIER_WORK = [
     role: "Full Stack Developer",
     year: "2023",
     stack: "React · Express · MongoDB · TMDB",
-    href: "https://nufy-movies.onrender.com",
+    href: "https://nufymovies.vercel.app",
   },
   {
     title: "Nuelmart E-Commerce",
